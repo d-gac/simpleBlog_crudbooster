@@ -16,7 +16,7 @@ use App\Http\Controllers\FrontController;
 */
 
 Route::get('/', function () {
-    $posts = Post::with('category')->get();
+    $posts = Post::with('category')->paginate(5);
     return view('welcome', ['posts' => $posts]);
 });
 Route::get('/posts', [FrontController::class, 'posts']);

@@ -22,9 +22,10 @@
             </div>
             <hr><br>
         @endforeach
+        <div class="linksPosition">{{$posts->links('vendor.pagination.bootstrap-4')}}</div>
     @endif
     {{--@if($categories)--}}
-    {{--    @foreach($categories as $category)--}}
+    {{--    @foreach($categories as $categonpmry)--}}
     {{--        <a href="{{ url('/category/'.$category->slug) }}">{{$category->name}}</a>: <br>--}}
     {{--        <ul>--}}
     {{--        @foreach($category->post as $post)--}}
