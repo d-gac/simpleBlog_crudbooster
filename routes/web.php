@@ -16,10 +16,27 @@ use App\Http\Controllers\FrontController;
 */
 
 Route::get('/', function () {
-    $posts = Post::with('category')->paginate(5);
-    return view('welcome', ['posts' => $posts]);
+//    $config = [];
+//    $config['to'] = 'nvm@com.pl';
+//    $config['data'] = ['nic', 'nic nic nie', 'dsada'];
+//    $config['template'] = 'testowy-mail';
+//    \crocodicstudio\crudbooster\helpers\CB::sendEmail($config);
+
+//    laravel mail working ok
+//    $data = [
+//        'var1' => '123',
+//        'var2' => '321'
+//    ];
+//    \Illuminate\Support\Facades\Mail::to('ktostam@wp.pl')->send(new \App\Mail\MakePostEmail($data));
+
+    $posts = FrontController::posts();
+    $gallery = FrontController::gallery();
+
+    return view('welcome', ['posts' => $posts, 'gallery' => $gallery]);
 });
 Route::get('/posts', [FrontController::class, 'posts']);
 Route::get('/categories', [FrontController::class, 'categories']);
 Route::get('/category/{slug}', [FrontController::class, 'category']);
 Route::get('/post/{slug}', [FrontController::class, 'post']);
+
+Route::get('/wyszukiwarka-1', [FrontController::class, 'tescik']);

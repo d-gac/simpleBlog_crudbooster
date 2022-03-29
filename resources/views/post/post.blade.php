@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('postDetail')
-    @if($posty)
+    @if($posty->count())
         @foreach($posty as $post)
             <div class="item mb-5">
                 <div class="postDetail">

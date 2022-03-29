@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
-	use Session;
+	use crocodicstudio\crudbooster\helpers\CB;
+    use Session;
 	use Request;
 	use DB;
 	use CRUDBooster;
@@ -276,7 +277,7 @@
 	    |
 	    */
 	    public function hook_after_add($id) {
-	        //Your code here
+	        CB::sendNotificationMy();
 
 	    }
 

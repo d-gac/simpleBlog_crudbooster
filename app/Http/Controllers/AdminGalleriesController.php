@@ -1,18 +1,16 @@
 <?php namespace App\Http\Controllers;
 
-    use crocodicstudio\crudbooster\helpers\CB;
-    use Session;
+	use Session;
 	use Request;
 	use DB;
 	use CRUDBooster;
-    use App\Models\Category;
 
-	class AdminCategoriesController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminGalleriesController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "name";
+			$this->title_field = "id";
 			$this->limit = "20";
 			$this->orderby = "id,desc";
 			$this->global_privilege = false;
@@ -27,23 +25,26 @@
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = false;
-			$this->table = "categories";
+			$this->table = "galleries";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Nazwa","name"=>"name"];
-			$this->col[] = ["label"=>"Slug","name"=>"slug"];
+			$this->col[] = ["label"=>"Źródło","name"=>"scr"];
+			$this->col[] = ["label"=>"Test alternatywny","name"=>"alt"];
+			$this->col[] = ["label"=>"Miniaturka","name"=>"scr","image"=>true];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Nazwa','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:255','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
+			$this->form[] = ['label'=>'Źródło','name'=>'scr','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Test alternatywny','name'=>'alt','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Nazwa','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:255','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
+			//$this->form[] = ['label'=>'Źródło','name'=>'scr','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Test alternatywny','name'=>'alt','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			# OLD END FORM
 
 			/*
@@ -252,9 +253,8 @@
 	    |
 	    */
 	    public function hook_before_add(&$postdata) {
-            $postdata['slug'] = str_slug($postdata['name']);
-            $postdata['created_by'] = CRUDBooster::myId() ?? null;
-            $postdata['root_id'] = Category::withTrashed()->max('id') + 1 ?? null;
+	        //Your code here
+
 	    }
 
 	    /*
@@ -278,22 +278,9 @@
 	    |
 	    */
 	    public function hook_before_edit(&$postdata,$id) {
-	        $root_category = Category::where('id', $id)->first();
-            $edited = Category::withTrashed()->where('root_id', $root_category->root_id)->count();
+	        //Your code here
 
-            $newItem = new Category();
-            $newItem->name = $postdata['name'];
-            $newItem->slug = str_slug($postdata['name']."-".($edited + 1));
-            $newItem->created_by = CRUDBooster::myId() ?? null;
-            $newItem->root_id = $root_category->root_id ?? null;
-            $newItem->save();
-
-            $postdata['updated_by'] = CRUDBooster::myId() ?? null;
-            $postdata['name'] = $root_category->name ?? null;
-
-            Category::where('id', $id)->update(['deleted_by' => CRUDBooster::myId() ?? null]);
-            Category::destroy($id);
-        }
+	    }
 
 	    /*
 	    | ----------------------------------------------------------------------
@@ -303,6 +290,7 @@
 	    |
 	    */
 	    public function hook_after_edit($id) {
+	        //Your code here
 
 	    }
 
@@ -314,8 +302,9 @@
 	    |
 	    */
 	    public function hook_before_delete($id) {
-            Category::where('id', $id)->update(['deleted_by' => CRUDBooster::myId() ?? null]);
-        }
+	        //Your code here
+
+	    }
 
 	    /*
 	    | ----------------------------------------------------------------------

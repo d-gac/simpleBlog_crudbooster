@@ -1,5 +1,5 @@
 /*! =========================================================
- * bootstrap-slider.js
+ * bootstrap-main.js
  *
  * Maintainers:
  *		Kyle Kemp
@@ -200,7 +200,7 @@
 			formatInvalidInputErrorMsg : function(input) {
 				return "Invalid input value '" + input + "' passed in";
 			},
-			callingContextNotSliderInstance : "Calling context element does not have instance of Slider bound to it. Check your code to make sure the JQuery object returned from the call to the slider() initializer is calling the method"
+			callingContextNotSliderInstance : "Calling context element does not have instance of Slider bound to it. Check your code to make sure the JQuery object returned from the call to the main() initializer is calling the method"
 		};
 
 		var SliderScale = {
@@ -305,7 +305,7 @@
 		function createNewSlider(element, options) {
 
 			/*
-				The internal state object is used to store data about the current 'state' of slider.
+				The internal state object is used to store data about the current 'state' of main.
 
 				This includes values such as the `value`, `enabled`, etc...
 			*/
@@ -369,7 +369,7 @@
 			}
 
 			function getDataAttrib(element, optName) {
-				var dataName = "data-slider-" + optName.replace(/_/g, '-');
+				var dataName = "data-main-" + optName.replace(/_/g, '-');
 				var dataValString = element.getAttribute(dataName);
 
 				try {
@@ -397,31 +397,31 @@
 			if (this.sliderElem) {
 				updateSlider = true;
 			} else {
-				/* Create elements needed for slider */
+				/* Create elements needed for main */
 				this.sliderElem = document.createElement("div");
 				this.sliderElem.className = "slider";
 
-				/* Create slider track elements */
+				/* Create main track elements */
 				var sliderTrack = document.createElement("div");
-				sliderTrack.className = "slider-track";
+				sliderTrack.className = "main-track";
 
 				sliderTrackLow = document.createElement("div");
-				sliderTrackLow.className = "slider-track-low";
+				sliderTrackLow.className = "main-track-low";
 
 				sliderTrackSelection = document.createElement("div");
-				sliderTrackSelection.className = "slider-selection";
+				sliderTrackSelection.className = "main-selection";
 
 				sliderTrackHigh = document.createElement("div");
-				sliderTrackHigh.className = "slider-track-high";
+				sliderTrackHigh.className = "main-track-high";
 
 				sliderMinHandle = document.createElement("div");
-				sliderMinHandle.className = "slider-handle min-slider-handle";
+				sliderMinHandle.className = "main-handle min-main-handle";
 				sliderMinHandle.setAttribute('role', 'slider');
 				sliderMinHandle.setAttribute('aria-valuemin', this.options.min);
 				sliderMinHandle.setAttribute('aria-valuemax', this.options.max);
 
 				sliderMaxHandle = document.createElement("div");
-				sliderMaxHandle.className = "slider-handle max-slider-handle";
+				sliderMaxHandle.className = "main-handle max-main-handle";
 				sliderMaxHandle.setAttribute('role', 'slider');
 				sliderMaxHandle.setAttribute('aria-valuemin', this.options.min);
 				sliderMaxHandle.setAttribute('aria-valuemax', this.options.max);
@@ -448,13 +448,13 @@
 				if (Array.isArray(this.options.ticks) && this.options.ticks.length > 0) {
 					for (i = 0; i < this.options.ticks.length; i++) {
 						var tick = document.createElement('div');
-						tick.className = 'slider-tick';
+						tick.className = 'main-tick';
 
 						this.ticks.push(tick);
 						sliderTrack.appendChild(tick);
 					}
 
-					sliderTrackSelection.className += " tick-slider-selection";
+					sliderTrackSelection.className += " tick-main-selection";
 				}
 
 				sliderTrack.appendChild(sliderMinHandle);
@@ -463,13 +463,13 @@
 				this.tickLabels = [];
 				if (Array.isArray(this.options.ticks_labels) && this.options.ticks_labels.length > 0) {
 					this.tickLabelContainer = document.createElement('div');
-					this.tickLabelContainer.className = 'slider-tick-label-container';
+					this.tickLabelContainer.className = 'main-tick-label-container';
 
 					for (i = 0; i < this.options.ticks_labels.length; i++) {
 						var label = document.createElement('div');
 						var noTickPositionsSpecified = this.options.ticks_positions.length === 0;
 						var tickLabelsIndex = (this.options.reversed && noTickPositionsSpecified) ? (this.options.ticks_labels.length - (i + 1)) : i;
-						label.className = 'slider-tick-label';
+						label.className = 'main-tick-label';
 						label.innerHTML = this.options.ticks_labels[tickLabelsIndex];
 
 						this.tickLabels.push(label);
@@ -517,7 +517,7 @@
 					this.sliderElem.appendChild(this.tickLabelContainer);
 				}
 
-				/* Append slider element to parent container, right before the original <input> element */
+				/* Append main element to parent container, right before the original <input> element */
 				parent.insertBefore(this.sliderElem, this.element);
 
 				/* Hide original <input> element */
@@ -554,8 +554,8 @@
 
 			if (updateSlider === true) {
 				// Reset classes
-				this._removeClass(this.sliderElem, 'slider-horizontal');
-				this._removeClass(this.sliderElem, 'slider-vertical');
+				this._removeClass(this.sliderElem, 'main-horizontal');
+				this._removeClass(this.sliderElem, 'main-vertical');
 				this._removeClass(this.tooltip, 'hide');
 				this._removeClass(this.tooltip_min, 'hide');
 				this._removeClass(this.tooltip_max, 'hide');
@@ -586,12 +586,12 @@
 			}
 
 			if(this.options.orientation === 'vertical') {
-				this._addClass(this.sliderElem,'slider-vertical');
+				this._addClass(this.sliderElem,'main-vertical');
 				this.stylePos = 'top';
 				this.mousePos = 'pageY';
 				this.sizePos = 'offsetHeight';
 			} else {
-				this._addClass(this.sliderElem, 'slider-horizontal');
+				this._addClass(this.sliderElem, 'main-horizontal');
 				this.sliderElem.style.width = origWidth;
 				this.options.orientation = 'horizontal';
 				this.stylePos = 'left';
@@ -823,10 +823,10 @@
 			},
 
 			destroy: function(){
-				// Remove event handlers on slider elements
+				// Remove event handlers on main elements
 				this._removeSliderEventHandlers();
 
-				// Remove the slider from the DOM
+				// Remove the main from the DOM
 				this.sliderElem.parentNode.removeChild(this.sliderElem);
 				/* Show original <input> element */
 				this.element.style.display = "";
@@ -848,7 +848,7 @@
 				this._state.enabled = false;
 				this.handle1.removeAttribute("tabindex");
 				this.handle2.removeAttribute("tabindex");
-				this._addClass(this.sliderElem, 'slider-disabled');
+				this._addClass(this.sliderElem, 'main-disabled');
 				this._trigger('slideDisabled');
 
 				return this;
@@ -858,7 +858,7 @@
 				this._state.enabled = true;
 				this.handle1.setAttribute("tabindex", 0);
 				this.handle2.setAttribute("tabindex", 0);
-				this._removeClass(this.sliderElem, 'slider-disabled');
+				this._removeClass(this.sliderElem, 'main-disabled');
 				this._trigger('slideEnabled');
 
 				return this;
@@ -908,7 +908,7 @@
 				this._removeSliderEventHandlers();
 				createNewSlider.call(this, this.element, this.options);
 				if($) {
-					// Bind new instance of slider to the element
+					// Bind new instance of main to the element
 					$.data(this.element, 'slider', this);
 				}
 				return this;
@@ -1409,14 +1409,14 @@
 				var eventPosition = ev[this.mousePos];
 				var sliderOffset = this._state.offset[this.stylePos];
 				var distanceToSlide = eventPosition - sliderOffset;
-				// Calculate what percent of the length the slider handle has slid
+				// Calculate what percent of the length the main handle has slid
 				var percentage = (distanceToSlide / this._state.size) * 100;
 				percentage = Math.round(percentage / this._state.percentage[2]) * this._state.percentage[2];
 				if (this.options.reversed) {
 					percentage = 100 - percentage;
 				}
 
-				// Make sure the percent is within the bounds of the slider.
+				// Make sure the percent is within the bounds of the main.
 				// 0% corresponds to the 'min' value of the slide
 				// 100% corresponds to the 'max' value of the slide
 				return Math.max(0, Math.min(100, percentage));

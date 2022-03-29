@@ -1,4 +1,5 @@
     @if($posts)
+        <p class="titleOnTop">Aktualności:</p>
         @foreach($posts as $post)
             <div class="item mb-5">
                 <div class="media">

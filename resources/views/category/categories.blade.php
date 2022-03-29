@@ -1,31 +1,38 @@
 @extends('welcome')
 @section('categoriesAll')
-@if($categories)
-    @foreach($categories as $category)
-        <p class="titleOnTop">{{$category->name}}:</p>
 
-            @foreach($category->post as $post)
-                <div class="item mb-5">
-                    <div class="media">
+    @if($categories->count())
+        @foreach($categories as $category)
 
-                        <a href="{{ url('/post/'.$post->slug) }}">
-                            <img style="max-width: 300px;" class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                                 src="/{{$post->photo}}" alt="wpis-{{$post->slug}}">
-                        </a>
+            @if($category->post->count())
+                <div style="margin-bottom: 50px">
+                    <p class="titleOnTop">{{$category->name}}:</p>
 
-                        <div class="media-body">
-                            <h3 class="title mb-1"><a href="{{ url('/post/'.$post->slug) }}">{{$post->title}}</a></h3>
-                            {{--                    <div class="meta mb-1"><span class="date">Published 2 days ago</span><span class="time">5 min read</span><span class="comment"><a href="#">8 comments</a></span></div>--}}
-                            <div class="intro">{!! $post->short_content !!}</div>
-                            <a href="{{ url('/post/'.$post->slug) }}">Więcej</a>
+                    @foreach($category->post as $post)
+
+                        <div class="item mb-5" style="margin-bottom: 0 !important;">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h3 class="title mb-1"><a
+                                            href="{{ url('/post/'.$post->slug) }}">{{$post->title}}</a></h3>
+                                    @if( \Carbon\Carbon::now()->format('d.m.Y H:i:s') - $post->created_at->format('d.m.Y H:i:s') > 1 )
+                                        {{\Carbon\Carbon::now()->format('d.m.Y H:i:s') - $post->created_at->format('d.m.Y H:i:s')}} dni temu
+                                    @else
+                                        Dziś
+                                    @endif
+                                    {{--                    <div class="meta mb-1"><span class="date">Published 2 days ago</span><span class="time">5 min read</span><span class="comment"><a href="#">8 comments</a></span></div>--}}
+                                    <div class="intro">{!! $post->short_content !!}</div>
+                                    <hr>
+                                </div>
+                            </div>
                         </div>
 
-                    </div>
+                    @endforeach
                 </div>
-                <hr><br>
-            @endforeach
+            @endif
 
-    @endforeach
-@endif
+        @endforeach
+    @endif
+
 @endsection
 
